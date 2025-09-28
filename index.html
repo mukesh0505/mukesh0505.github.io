@@ -1,122 +1,343 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mukesh Kumar - Resume</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background: #f4f4f9;
-      color: #333;
-    }
-    header {
-      background: #2c3e50;
-      color: white;
-      padding: 40px 20px;
-      text-align: center;
-    }
-    header h1 {
-      margin: 0;
-      font-size: 2.5em;
-    }
-    header p {
-      margin: 5px 0 0;
-      font-size: 1.2em;
-    }
-    section {
-      max-width: 800px;
-      margin: 40px auto;
-      padding: 0 20px;
-    }
-    h2 {
-      color: #2c3e50;
-      border-bottom: 2px solid #2c3e50;
-      padding-bottom: 5px;
-    }
-    ul {
-      list-style-type: none;
-      padding: 0;
-    }
-    li {
-      margin: 5px 0;
-    }
-    .skills li {
-      display: inline-block;
-      background: #3498db;
-      color: white;
-      padding: 5px 10px;
-      margin: 5px 5px 5px 0;
-      border-radius: 5px;
-    }
-    footer {
-      text-align: center;
-      padding: 20px;
-      background: #2c3e50;
-      color: white;
-    }
-    a {
-      color: #3498db;
-      text-decoration: none;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mukesh Kumar – Resume</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles/main.css">
+<script src="https://unpkg.com/lottie-web@latest/build/player/lottie.min.js"></script>
 </head>
 <body>
 
-  <header>
-    <h1>Mukesh Kumar</h1>
-    <p>Online resume – because paper is so 1999 😎</p>
-  </header>
+<header>
+  <div class="header-content">
+    <div class="profile-img-container">
+      <img src="images/profile.jpg" alt="Mukesh Kumar" class="profile-img">
+    </div>
+    <div class="header-text">
+      <h1 id="name">Mukesh Kumar</h1>
+      <p id="title">Technical Lead – Bengaluru, India</p>
+    </div>
+    <div class="lottie-container" id="lottie-header"></div>
+    <div class="lang-switcher">
+      <button onclick="setLanguage('en')">EN</button>
+      <button onclick="setLanguage('ja')">日本語</button>
+    </div>
+  </div>
+</header>
 
-  <section id="about">
-    <h2>About Me</h2>
-    <p>Hello! I’m Mukesh Kumar, a software developer with a passion for building mobile and web apps. I love solving problems, learning new tech, and sometimes making my resume a bit funny. 😁</p>
-  </section>
-
-  <section id="skills">
-    <h2>Skills</h2>
-    <ul class="skills">
-      <li>Android</li>
-      <li>iOS</li>
-      <li>Swift</li>
-      <li>Kotlin</li>
-      <li>Java</li>
-      <li>DSA</li>
-      <li>Git & GitHub</li>
-    </ul>
+<main>
+  <section id="profile">
+    <h2 id="profile-title">Profile</h2>
+    <p id="profile-text">Mobile application developer with 9+ years of experience delivering innovative, high-performance solutions across Android, iOS, and watchOS platforms...</p>
   </section>
 
   <section id="experience">
-    <h2>Experience</h2>
-    <ul>
-      <li><strong>Technical Lead</strong> – XYZ Company (2025 – Present)</li>
-      <li><strong>Senior Software Developer</strong> – ABC Company (2021 – 2025)</li>
-      <li><strong>Software Developer</strong> – DEF Company (2015 – 2021)</li>
-    </ul>
+    <h2 id="experience-title">Employment History</h2>
+    <div id="experience-list" class="experience-grid"></div>
   </section>
 
-  <section id="projects">
-    <h2>Projects</h2>
-    <ul>
-      <li><a href="#">Project One</a> – Mobile app for X</li>
-      <li><a href="#">Project Two</a> – iOS app for Y</li>
-      <li><a href="#">Project Three</a> – Full-stack web app for Z</li>
-    </ul>
+  <section id="education">
+    <h2 id="education-title">Education</h2>
+    <div id="education-list"></div>
+  </section>
+
+  <section id="skills">
+    <h2 id="skills-title">Skills</h2>
+    <ul id="skills-list" class="skills"></ul>
+  </section>
+
+  <section id="awards">
+    <h2 id="awards-title">Awards</h2>
+    <ul id="awards-list" class="awards"></ul>
   </section>
 
   <section id="contact">
-    <h2>Contact</h2>
-    <p>Email: <a href="mailto:mukesh@example.com">mukesh@example.com</a></p>
-    <p>GitHub: <a href="https://github.com/mukesh0505">github.com/mukesh0505</a></p>
-    <p>LinkedIn: <a href="#">linkedin.com/in/mukeshkumar</a></p>
+    <h2 id="contact-title">Contact</h2>
+    <p id="phone"></p>
+    <p id="email"></p>
+    <p id="linkedin"></p>
+    <p id="github"></p>
   </section>
+</main>
 
-  <footer>
-    <p>© 2025 Mukesh Kumar – Resume hosted on GitHub Pages</p>
-  </footer>
+<footer>
+  <p>© 2025 Mukesh Kumar – Resume hosted on GitHub Pages</p>
+</footer>
 
+<script>
+const content = {
+  en: {
+    name: "Mukesh Kumar",
+    title: "Technical Lead – Bengaluru, India",
+    profileTitle: "Profile",
+    profileText: "Mobile application developer with 9+ years of experience delivering innovative, high-performance solutions across Android, iOS, and watchOS platforms. Experienced in leading development efforts, mentoring team members, and promoting best practices for clean, maintainable code and scalable architecture. Contributed to a watchOS application that led to a patent filing, reflecting a strong focus on innovation and technical excellence.",
+    experienceTitle: "Employment History",
+    experienceList: [
+      {
+        company: "Rakuten India",
+        role: "Technical Lead",
+        date: "Nov 2021 – Present | Bengaluru",
+        projects: [
+          {
+            name: "Rakuten Pay",
+            icon: "images/rakutenpay.png",
+            description: "Led barcode optimization and Rakuten Ads integration; guided team from POC to MVP; mentored team.",
+            appStore: "https://apps.apple.com/app/rakuten-pay/id123456789",
+            playStore: "https://play.google.com/store/apps/details?id=com.rakuten.pay"
+          },
+          {
+            name: "Rakuten Sports – Iniesta Academy",
+            description: "Built Reaction, Training & Consultation apps from scratch; led mobile team for branching & releases; 80%+ unit test coverage."
+          },
+          {
+            name: "Rakuten App Store SDK",
+            description: "Developed In-App Rating and In-App Purchase SDKs to improve engagement and purchase flow."
+          }
+        ]
+      },
+      {
+        company: "Robosoft Technologies Pvt Ltd",
+        role: "Senior Software Engineer",
+        date: "Jul 2019 – Nov 2021 | Bengaluru",
+        projects: [
+          {
+            name: "CapitaStar@Work",
+            icon: "images/capitastar.png",
+            description: "Developed Android app modules serving workplace community; improved UX & performance.",
+            playStore: "https://play.google.com/store/apps/details?id=workindia.capitastar.com&hl=en_IN"
+          },
+          {
+            name: "PayPay",
+            icon: "images/paypay.png",
+            description: "Developed external SDKs, core features, and store/brand modules; 80%+ unit test coverage.",
+            playStore: "https://play.google.com/store/apps/details?id=jp.ne.paypay.android.app&hl=en_IN"
+          }
+        ]
+      },
+      {
+        company: "Global Delight Technologies Pvt Ltd",
+        role: "Software Engineer",
+        date: "Jun 2016 – Jul 2019 | Udupi",
+        projects: [
+          {
+            name: "Vizmato",
+            icon: "images/vizmato.png",
+            description: "Created UI components, onboarding animations, and SDKs for seamless integration; optimized performance for Android & iOS apps.",
+            playStore: "https://play.google.com/store/search?q=vizmato&c=apps&hl=en_IN"
+          }
+        ]
+      }
+    ],
+    educationTitle: "Education",
+    educationList: [
+      {
+        school: "Reva Institute of Technology and Management",
+        degree: "Bachelor of Engineering",
+        date: "Aug 2012 – Jun 2016"
+      }
+    ],
+    skillsTitle: "Skills",
+    skillsList: [
+      "Android", "iOS", "SwiftUI", "Unit Testing", "Firebase", "Clean Architecture", "MVC", "Coroutine", "Combine", "Kotlin", "Java", "Mobile App Development"
+    ],
+    awardsTitle: "Awards",
+    awardsList: [
+      "Rakuten Excellence Award (SPOT)",
+      "Emerging Star Award",
+      "Trendsetter Award",
+      "Individual Excellence Award (2024)",
+      "Individual Excellence Award (2025)"
+    ],
+    contactTitle: "Contact",
+    phone: "Phone: +91-7204606959",
+    email: 'Email: <a href="mailto:mukesh.beis@gmail.com">mukesh.beis@gmail.com</a>',
+    linkedin: 'LinkedIn: <a href="https://www.linkedin.com/in/mukesh-kumar-66567590/" target="_blank">linkedin.com/in/mukesh-kumar-66567590</a>',
+    github: 'GitHub: <a href="https://github.com/mukesh0505" target="_blank">github.com/mukesh0505</a>'
+  },
+  ja: {
+    name: "ムケシュ・クマール",
+    title: "テクニカルリード – ベンガルール、インド",
+    profileTitle: "プロフィール",
+    profileText: "9年以上の経験を持つモバイルアプリケーション開発者。Android、iOS、watchOSプラットフォームで革新的で高性能なソリューションを提供。開発リーダーとして、チームメンバーの指導や、クリーンで保守性の高いコード、スケーラブルなアーキテクチャのベストプラクティスを推進。特許申請につながったwatchOSアプリケーションの開発にも貢献。",
+    experienceTitle: "職務経歴",
+    experienceList: [
+      {
+        company: "楽天インディア",
+        role: "テクニカルリード",
+        date: "2021年11月 – 現在 | ベンガルール",
+        projects: [
+          {
+            name: "楽天ペイ",
+            icon: "images/rakutenpay.png",
+            description: "バーコード最適化と楽天広告統合を主導。POCからMVPまでチームを指導。メンターとして活躍。",
+            appStore: "https://apps.apple.com/jp/app/%E6%A5%BD%E5%A4%A9%E3%83%9A%E3%82%A4-%E6%A5%BD%E5%A4%A9%E3%83%9D%E3%82%A4%E3%83%B3%E3%83%88%E3%82%AB%E3%83%BC%E3%83%89%E3%82%82%E5%88%A9%E7%94%A8%E3%81%A7%E3%81%8D%E3%82%8B%E3%82%B9%E3%83%9E%E3%83%9B%E6%B1%BA%E6%B8%88%E3%82%A2%E3%83%97%E3%83%AA/id1139755229",
+            playStore: "https://play.google.com/store/apps/details?id=jp.co.rakuten.pay"
+          },
+          {
+            name: "楽天スポーツ – イニエスタアカデミー",
+            description: "Reaction、Training、Consultationアプリをゼロから構築。モバイルチームの分岐戦略とリリースプロセスを主導。80%以上のユニットテストカバレッジを達成。"
+          },
+          {
+            name: "楽天アプリストアSDK",
+            description: "インアプリ評価とインアプリ購入SDKを開発し、エンゲージメントと購入フローを改善。"
+          }
+        ]
+      },
+      {
+        company: "ロボソフトテクノロジーズ株式会社",
+        role: "シニアソフトウェアエンジニア",
+        date: "2019年7月 – 2021年11月 | ベンガルール",
+        projects: [
+          {
+            name: "CapitaStar@Work",
+            icon: "images/capitastar.png",
+            description: "職場コミュニティ向けAndroidアプリのモジュール開発。UXとパフォーマンスを改善。",
+            appStore: "https://apps.apple.com/app/capitastar/id234567890",
+            playStore: "https://play.google.com/store/apps/details?id=com.capitastar.work"
+          },
+          {
+            name: "PayPay",
+            icon: "images/paypay.png",
+            description: "外部SDK、コア機能、ストア/ブランドモジュールを開発。80%以上のユニットテストカバレッジを達成。",
+            appStore: "https://apps.apple.com/app/paypay/id345678901",
+            playStore: "https://play.google.com/store/apps/details?id=jp.ne.paypay"
+          }
+        ]
+      },
+      {
+        company: "グローバルデライトテクノロジーズ株式会社",
+        role: "ソフトウェアエンジニア",
+        date: "2016年6月 – 2019年7月 | ウドゥピ",
+        projects: [
+          {
+            name: "Vizmato",
+            icon: "images/vizmato.png",
+            description: "UIコンポーネント、オンボーディングアニメーション、SDKを開発。AndroidとiOSアプリのパフォーマンスを最適化。",
+            appStore: "https://apps.apple.com/app/vizmato/id567890123",
+            playStore: "https://play.google.com/store/apps/details?id=com.globaldelight.vizmato"
+          }
+        ]
+      }
+    ],
+    educationTitle: "学歴",
+    educationList: [
+      {
+        school: "Reva工科大学",
+        degree: "工学士",
+        date: "2012年8月 – 2016年6月"
+      }
+    ],
+    skillsTitle: "スキル",
+    skillsList: [
+      "Android", "iOS", "SwiftUI", "ユニットテスト", "Firebase", "クリーンアーキテクチャ", "MVC", "コルーチン", "Combine", "Kotlin", "Java", "モバイルアプリ開発"
+    ],
+    awardsTitle: "受賞歴",
+    awardsList: [
+      "楽天エクセレンス賞 (SPOT)",
+      "エマージングスター賞",
+      "トレンドセッター賞",
+      "個人エクセレンス賞 (2024)",
+      "個人エクセレンス賞 (2025)"
+    ],
+    contactTitle: "連絡先",
+    phone: "電話: +91-7204606959",
+    email: 'メール: <a href="mailto:mukesh.beis@gmail.com">mukesh.beis@gmail.com</a>',
+    linkedin: 'LinkedIn: <a href="https://www.linkedin.com/in/mukesh-kumar-66567590/" target="_blank">linkedin.com/in/mukesh-kumar-66567590</a>',
+    github: 'GitHub: <a href="https://github.com/mukesh0505" target="_blank">github.com/mukesh0505</a>'
+  }
+};
+
+function setLanguage(lang) {
+  const c = content[lang];
+  document.getElementById('name').innerText = c.name;
+  document.getElementById('title').innerText = c.title;
+  document.getElementById('profile-title').innerText = c.profileTitle;
+  document.getElementById('profile-text').innerText = c.profileText;
+  document.getElementById('experience-title').innerText = c.experienceTitle;
+
+  // Experience
+  const expList = document.getElementById('experience-list');
+  expList.innerHTML = '';
+  c.experienceList.forEach(item => {
+    const div = document.createElement('div');
+    div.className = 'company-card experience-item';
+    div.innerHTML = `
+      <h3>${item.company} – ${item.role}</h3>
+      <div class="company-date">${item.date}</div>
+      <div class="projects-grid">
+        ${item.projects.map(project => `
+          <div class="project-card">
+            ${project.icon ? `<img src="${project.icon}" alt="${project.name} icon" class="project-icon" style="width:40px;height:40px;border-radius:8px;margin-bottom:8px;">` : ''}
+            <h4>${project.name}</h4>
+            <p>${project.description}</p>
+            ${(project.appStore || project.playStore) ? `
+              <div>
+                ${project.appStore ? `<a href="${project.appStore}" target="_blank"><img src="images/appstore.svg" alt="App Store" style="width:24px;height:24px;vertical-align:middle;margin-right:8px;"></a>` : ''}
+                ${project.playStore ? `<a href="${project.playStore}" target="_blank"><img src="images/playstore.svg" alt="Play Store" style="width:24px;height:24px;vertical-align:middle;"></a>` : ''}
+              </div>
+            ` : ''}
+          </div>
+        `).join('')}
+      </div>
+    `;
+    expList.appendChild(div);
+  });
+
+  // Education
+  document.getElementById('education-title').innerText = c.educationTitle;
+  const eduList = document.getElementById('education-list');
+  eduList.innerHTML = '';
+  c.educationList.forEach(item => {
+    const div = document.createElement('div');
+    div.className = 'education-item';
+    div.innerHTML = `
+      <h3>${item.school}</h3>
+      <p>${item.degree}</p>
+      <p>${item.date}</p>
+    `;
+    eduList.appendChild(div);
+  });
+
+  // Skills
+  document.getElementById('skills-title').innerText = c.skillsTitle;
+  const skillsList = document.getElementById('skills-list');
+  skillsList.innerHTML = c.skillsList.map(skill=>`<li>${skill}</li>`).join('');
+
+  // Awards
+  document.getElementById('awards-title').innerText = c.awardsTitle;
+  document.getElementById('awards-list').innerHTML = c.awardsList.map(a=>`<li>${a}</li>`).join('');
+
+  // Contact
+  document.getElementById('contact-title').innerText = c.contactTitle;
+  document.getElementById('phone').innerText = c.phone;
+  document.getElementById('email').innerHTML = c.email;
+  document.getElementById('linkedin').innerHTML = c.linkedin;
+  document.getElementById('github').innerHTML = c.github;
+}
+
+// Initialize English
+setLanguage('en');
+
+// Lottie Animation
+lottie.loadAnimation({
+  container: document.getElementById('lottie-header'),
+  renderer: 'svg',
+  loop: true,
+  autoplay: true,
+  path: 'https://assets2.lottiefiles.com/packages/lf20_1pxqjqps.json'
+});
+
+// Section scroll animation
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.2 });
+document.querySelectorAll('main section').forEach(el => observer.observe(el));
+</script>
 </body>
 </html>
-

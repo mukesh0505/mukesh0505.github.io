@@ -1,0 +1,308 @@
+/* ------------------ */
+/* Global & Fonts */
+/* ------------------ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: #f5f7fa;
+  color: #333;
+  line-height: 1.6;
+  scroll-behavior: smooth;
+}
+
+a {
+  color: #0077ff;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+h1, h2, h3 {
+  font-weight: 700;
+}
+
+ul {
+  list-style: none;
+}
+
+/* ------------------ */
+/* Header */
+/* ------------------ */
+header {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: #fff;
+  text-align: center;
+  padding: 50px 20px 70px;
+  position: relative;
+  overflow: hidden;
+}
+
+header .profile-img-container {
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 20px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 4px solid #fff;
+}
+
+header .profile-img-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+
+header p {
+  font-size: 1.1rem;
+  opacity: 0.85;
+}
+
+header .lottie-container {
+  width: 120px;
+  height: 120px;
+  margin: 20px auto 0;
+}
+
+header .lang-switcher {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+header .lang-switcher button {
+  background: rgba(255,255,255,0.2);
+  border: none;
+  color: #fff;
+  padding: 6px 12px;
+  margin-left: 5px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.3s;
+}
+
+header .lang-switcher button:hover {
+  background: rgba(255,255,255,0.4);
+}
+
+/* ------------------ */
+/* Main Sections */
+/* ------------------ */
+main {
+  max-width: 1000px;
+  margin: -50px auto 50px;
+  padding: 0 20px;
+}
+
+/* Card style sections */
+section {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+  margin: 40px 0;
+  padding: 30px 40px;
+  opacity: 0;
+  transform: translateY(50px);
+  transition: all 0.8s ease-out;
+}
+
+section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+section h2 {
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  color: #4a4a4a;
+  position: relative;
+}
+
+section h2::after {
+  content: '';
+  width: 60px;
+  height: 3px;
+  background: #667eea;
+  display: block;
+  margin-top: 6px;
+  border-radius: 2px;
+}
+
+/* ------------------ */
+/* Experience & Education */
+/* ------------------ */
+.experience-item, .education-item {
+  margin-bottom: 25px;
+}
+
+.experience-item h3, .education-item h3 {
+  font-size: 1.2rem;
+  margin-bottom: 6px;
+  color: #333;
+}
+
+.experience-item p, .education-item p {
+  font-size: 0.95rem;
+  color: #666;
+  margin-bottom: 8px;
+}
+
+.experience-item ul, .education-item ul {
+  margin-left: 15px;
+}
+
+.experience-item ul li {
+  margin-bottom: 6px;
+  position: relative;
+  padding-left: 10px;
+}
+
+.experience-item ul li::before {
+  content: "•";
+  color: #667eea;
+  position: absolute;
+  left: 0;
+}
+
+/* ------------------ */
+/* Skills & Awards */
+/* ------------------ */
+.skills, .awards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.skills li, .awards li {
+  background: #eef1ff;
+  color: #4a4a4a;
+  padding: 6px 12px;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: transform 0.3s;
+}
+
+.skills li:hover, .awards li:hover {
+  transform: translateY(-3px);
+  background: #667eea;
+  color: #fff;
+}
+
+/* ------------------ */
+/* Contact Section */
+/* ------------------ */
+#contact p {
+  margin-bottom: 12px;
+  font-size: 1rem;
+}
+
+#contact a {
+  color: #667eea;
+}
+
+/* ------------------ */
+/* Footer */
+/* ------------------ */
+footer {
+  text-align: center;
+  padding: 20px;
+  font-size: 0.9rem;
+  color: #999;
+}
+
+/* ------------------ */
+/* Responsive */
+@media (max-width: 768px) {
+  header {
+    padding: 40px 15px 60px;
+  }
+
+  header h1 {
+    font-size: 2rem;
+  }
+
+  section {
+    padding: 25px 20px;
+  }
+}
+/* Company card */
+.company-card {
+  margin-bottom: 40px;
+  padding: 20px;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+  transition: transform 0.3s;
+}
+
+.company-card:hover {
+  transform: translateY(-5px);
+}
+
+.company-card h3 {
+  font-size: 1.3rem;
+  margin-bottom: 6px;
+}
+
+.company-card .company-date {
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+/* Projects grid */
+.projects-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.project-card {
+  flex: 1 1 250px;
+  background: #eef1ff;
+  border-radius: 12px;
+  padding: 15px;
+  text-align: center;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.project-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+}
+
+.project-card h4 {
+  font-size: 1.1rem;
+  margin: 10px 0 8px;
+}
+
+.project-card p {
+  font-size: 0.9rem;
+  color: #444;
+}
+
+.project-icon {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  margin-bottom: 10px;
+  border-radius: 12px;
+  transition: transform 0.3s;
+}
+
+.project-card a:hover .project-icon {
+  transform: scale(1.1);
+}
