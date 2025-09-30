@@ -6,6 +6,11 @@
 <title>Mukesh Kumar – Resume</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles/main.css">
+<style>
+  body {
+    background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
+  }
+</style>
 <script src="https://unpkg.com/lottie-web@latest/build/player/lottie.min.js"></script>
 </head>
 <body>
@@ -17,9 +22,8 @@
     </div>
     <div class="header-text">
       <h1 id="name">Mukesh Kumar</h1>
-      <p id="title">Technical Lead – Bengaluru, India</p>
     </div>
-    <div class="lottie-container" id="lottie-header"></div>
+    <!-- Remove Lottie from header, move to bottom right -->
     <div class="lang-switcher">
       <button onclick="setLanguage('en')">EN</button>
       <button onclick="setLanguage('ja')">日本語</button>
@@ -29,32 +33,35 @@
 
 <main>
   <section id="profile">
-    <h2 id="profile-title">Profile</h2>
-    <p id="profile-text">Mobile application developer with 9+ years of experience delivering innovative, high-performance solutions across Android, iOS, and watchOS platforms...</p>
+    <h2 id="profile-title"></h2>
+    <p id="profile-text"></p>
   </section>
 
   <section id="experience">
-    <h2 id="experience-title">Employment History</h2>
+    <h2 id="experience-title"></h2>
     <div id="experience-list" class="experience-grid"></div>
   </section>
 
   <section id="education">
-    <h2 id="education-title">Education</h2>
+    <h2 id="education-title"></h2>
     <div id="education-list"></div>
   </section>
 
   <section id="skills">
-    <h2 id="skills-title">Skills</h2>
+    <h2 id="skills-title"></h2>
     <ul id="skills-list" class="skills"></ul>
   </section>
 
   <section id="awards">
-    <h2 id="awards-title">Awards</h2>
+    <h2 id="awards-title" style="display: flex; align-items: center; gap: 8px;">
+      <span>Awards</span>
+      <span id="award-icon" style="width: 28px; height: 28px; display: inline-block;"></span>
+    </h2>
     <ul id="awards-list" class="awards"></ul>
   </section>
 
   <section id="contact">
-    <h2 id="contact-title">Contact</h2>
+    <h2 id="contact-title"></h2>
     <p id="phone"></p>
     <p id="email"></p>
     <p id="linkedin"></p>
@@ -65,6 +72,44 @@
 <footer>
   <p>© 2025 Mukesh Kumar – Resume hosted on GitHub Pages</p>
 </footer>
+
+<!-- Update Lottie animation at page bottom right to a relevant "AI assistant" icon -->
+<div id="lottie-chatbot" style="
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  width: 90px;
+  height: 90px;
+  z-index: 1000;
+  cursor: pointer;
+"></div>
+
+<!-- Add chatbox dialog markup just before </body> -->
+<div id="chatbox" style="
+  position: fixed;
+  right: 32px;
+  bottom: 130px;
+  width: 320px;
+  max-width: 90vw;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(44,62,80,0.15);
+  border: 1px solid #e9ecef;
+  display: none;
+  z-index: 1100;
+  flex-direction: column;
+  overflow: hidden;
+">
+  <div style="background:#3498db;color:#fff;padding:16px 20px;font-weight:600;">
+    👋 Hi! Ask me anything about Mukesh Kumar's resume.
+    <span id="close-chat" style="float:right;cursor:pointer;font-size:1.2em;">×</span>
+  </div>
+  <div id="chat-messages" style="padding:16px;min-height:80px;max-height:180px;overflow-y:auto;font-size:1em;"></div>
+  <div style="padding:12px 16px;border-top:1px solid #e9ecef;display:flex;gap:8px;">
+    <input id="chat-input" type="text" placeholder="Type your question..." style="flex:1;padding:8px 12px;border-radius:8px;border:1px solid #e9ecef;">
+    <button id="chat-send" style="background:#3498db;color:#fff;border:none;border-radius:8px;padding:8px 16px;cursor:pointer;">Send</button>
+  </div>
+</div>
 
 <script>
 const content = {
@@ -252,20 +297,52 @@ const content = {
 function setLanguage(lang) {
   const c = content[lang];
   document.getElementById('name').innerText = c.name;
-  document.getElementById('title').innerText = c.title;
   document.getElementById('profile-title').innerText = c.profileTitle;
   document.getElementById('profile-text').innerText = c.profileText;
   document.getElementById('experience-title').innerText = c.experienceTitle;
+  document.getElementById('education-title').innerText = c.educationTitle;
+  document.getElementById('skills-title').innerText = c.skillsTitle;
+  document.getElementById('awards-title').innerText = c.awardsTitle;
+  document.getElementById('contact-title').innerText = c.contactTitle;
 
   // Experience
+  const companyLinks = {
+    "Rakuten India": "https://corp.rakuten.co.in/",
+    "Robosoft Technologies Pvt Ltd": "https://www.robosoftin.com/",
+    "Global Delight Technologies Pvt Ltd": "https://www.globaldelight.com/",
+    "楽天インディア": "https://corp.rakuten.co.in/",
+    "ロボソフトテクノロジーズ株式会社": "https://www.robosoftin.com/",
+    "グローバルデライトテクノロジーズ株式会社": "https://www.globaldelight.com/"
+  };
+
   const expList = document.getElementById('experience-list');
   expList.innerHTML = '';
   c.experienceList.forEach(item => {
+    const companyLink = companyLinks[item.company] || "#";
     const div = document.createElement('div');
     div.className = 'company-card experience-item';
     div.innerHTML = `
-      <h3>${item.company} – ${item.role}</h3>
-      <div class="company-date">${item.date}</div>
+      <h3>
+        <a href="${companyLink}" target="_blank" style="color:inherit;text-decoration:underline;">
+          ${item.company}
+        </a>
+      </h3>
+      <div class="designation" style="font-size:1.1rem; font-weight:600; color:#3498db; margin-bottom:8px;">
+        ${item.role}
+      </div>
+      <div class="company-date" style="
+        background: linear-gradient(90deg, #f5f6fa 0%, #e9ecef 100%);
+        color: #444;
+        font-weight: 600;
+        padding: 6px 16px;
+        border-radius: 16px;
+        display: inline-block;
+        margin-bottom: 12px;
+        letter-spacing: 0.5px;
+        box-shadow: 0 2px 8px rgba(233,236,239,0.10);
+      ">
+        ${item.date}
+      </div>
       <div class="projects-grid">
         ${item.projects.map(project => `
           <div class="project-card">
@@ -286,7 +363,6 @@ function setLanguage(lang) {
   });
 
   // Education
-  document.getElementById('education-title').innerText = c.educationTitle;
   const eduList = document.getElementById('education-list');
   eduList.innerHTML = '';
   c.educationList.forEach(item => {
@@ -301,33 +377,93 @@ function setLanguage(lang) {
   });
 
   // Skills
-  document.getElementById('skills-title').innerText = c.skillsTitle;
   const skillsList = document.getElementById('skills-list');
   skillsList.innerHTML = c.skillsList.map(skill=>`<li>${skill}</li>`).join('');
 
   // Awards
-  document.getElementById('awards-title').innerText = c.awardsTitle;
   document.getElementById('awards-list').innerHTML = c.awardsList.map(a=>`<li>${a}</li>`).join('');
 
   // Contact
-  document.getElementById('contact-title').innerText = c.contactTitle;
   document.getElementById('phone').innerText = c.phone;
   document.getElementById('email').innerHTML = c.email;
   document.getElementById('linkedin').innerHTML = c.linkedin;
   document.getElementById('github').innerHTML = c.github;
 }
 
-// Initialize English
-setLanguage('en');
-
-// Lottie Animation
+// Lottie Animation for bottom right chatbot/AI (updated to "AI assistant" style)
 lottie.loadAnimation({
-  container: document.getElementById('lottie-header'),
+  container: document.getElementById('lottie-chatbot'),
   renderer: 'svg',
   loop: true,
   autoplay: true,
-  path: 'https://assets2.lottiefiles.com/packages/lf20_1pxqjqps.json'
+  path: 'https://assets10.lottiefiles.com/packages/lf20_3vbOcw.json' // "AI assistant - May I help you?" style
 });
+
+// Chatbox logic
+const chatbotIcon = document.getElementById('lottie-chatbot');
+const chatbox = document.getElementById('chatbox');
+const chatInput = document.getElementById('chat-input');
+const chatSend = document.getElementById('chat-send');
+const chatMessages = document.getElementById('chat-messages');
+const closeChat = document.getElementById('close-chat');
+
+// Show chatbox when icon clicked
+chatbotIcon.onclick = () => {
+  chatbox.style.display = 'flex';
+  chatInput.focus();
+};
+
+// Close chatbox
+closeChat.onclick = () => {
+  chatbox.style.display = 'none';
+};
+
+// Simple Q&A logic (expand as needed)
+function getAnswer(question) {
+  question = question.toLowerCase();
+
+  // Dynamic experience calculation
+  const now = new Date();
+  const androidStart = new Date('2021-11-01'); // Rakuten India start
+  const iosStart = new Date('2019-11-01'); // Robosoft start
+  const androidYears = ((now - androidStart) / (1000 * 60 * 60 * 24 * 365.25)).toFixed(1);
+  const iosYears = ((now - iosStart) / (1000 * 60 * 60 * 24 * 365.25)).toFixed(1);
+
+  if (question.includes('skills')) return 'Mukesh is skilled in Android, iOS, SwiftUI, Unit Testing, Firebase, Clean Architecture, MVC, Coroutine, Combine, Kotlin, Java, and Mobile App Development.';
+  if (question.includes('contact')) return 'You can contact Mukesh at <a href="mailto:mukesh.beis@gmail.com">mukesh.beis@gmail.com</a> or <a href="tel:+917204606959">+91-7204606959</a>.';
+  if (question.includes('award')) return 'Awards include Rakuten Excellence Award (SPOT), Emerging Star Award, Trendsetter Award, and Individual Excellence Award (2024, 2025).';
+  if (question.includes('education')) return 'Mukesh graduated from Reva Institute of Technology and Management with a Bachelor of Engineering.';
+  if (question.includes('experience') || question.includes('work')) return 'Mukesh has worked at <a href="https://corp.rakuten.co.in/" target="_blank">Rakuten India</a>, <a href="https://www.robosoftin.com/" target="_blank">Robosoft Technologies</a>, and <a href="https://www.globaldelight.com/" target="_blank">Global Delight Technologies</a>.';
+  if (question.includes('project')) return 'Key projects: <a href="https://apps.apple.com/app/rakuten-pay/id123456789" target="_blank">Rakuten Pay</a>, <a href="https://play.google.com/store/apps/details?id=workindia.capitastar.com&hl=en_IN" target="_blank">CapitaStar@Work</a>, <a href="https://play.google.com/store/apps/details?id=jp.ne.paypay.android.app&hl=en_IN" target="_blank">PayPay</a>, <a href="https://play.google.com/store/search?q=vizmato&c=apps&hl=en_IN" target="_blank">Vizmato</a>, and more.';
+  if (question.includes('linkedin')) return 'LinkedIn: <a href="https://www.linkedin.com/in/mukesh-kumar-66567590/" target="_blank">linkedin.com/in/mukesh-kumar-66567590</a>';
+  if (question.includes('github')) return 'GitHub: <a href="https://github.com/mukesh0505" target="_blank">github.com/mukesh0505</a>';
+  if (question.includes('designation') || question.includes('current role') || question.includes('position')) return 'Mukesh Kumar is currently a Technical Lead at <a href="https://corp.rakuten.co.in/" target="_blank">Rakuten India</a>.';
+  if (question.includes('patent') || question.includes('watchos')) return 'Mukesh contributed to a watchOS application that led to a patent filing, demonstrating innovation and technical excellence in wearable app development.';
+  if (question.includes('download') || question.includes('downloads') || question.includes('application count')) return 'Applications Mukesh has worked on, such as <a href="https://apps.apple.com/app/rakuten-pay/id123456789" target="_blank">Rakuten Pay</a>, <a href="https://play.google.com/store/apps/details?id=jp.ne.paypay.android.app&hl=en_IN" target="_blank">PayPay</a>, and <a href="https://play.google.com/store/search?q=vizmato&c=apps&hl=en_IN" target="_blank">Vizmato</a>, have achieved millions of downloads on the App Store and Play Store.';
+  if (question.includes('android experience')) return `Mukesh has approximately ${androidYears} years of current experience working with Android development.`;
+  if (question.includes('ios experience')) return `Mukesh has approximately ${iosYears} years of current experience working with iOS development.`;
+  if (question.includes('location') || question.includes('current location') || question.includes('where')) return 'Mukesh Kumar is currently based in Bengaluru, India, and is originally from Jharkhand.';
+  if (question.includes('origin') || question.includes('hometown') || question.includes('jharkhand')) return 'Mukesh Kumar is originally from Jharkhand.';
+  if (question.includes('package') || question.includes('salary') || question.includes('ctc')) return 'For details about Mukesh Kumar\'s current package or salary, please contact him directly via <a href="https://www.linkedin.com/in/mukesh-kumar-66567590/" target="_blank">LinkedIn</a>, <a href="mailto:mukesh.beis@gmail.com">email</a>, or <a href="tel:+917204606959">mobile</a>.';
+  if (question.includes('company')) return 'Mukesh is currently working at <a href="https://corp.rakuten.co.in/" target="_blank">Rakuten India</a>.';
+  if (question.includes('everything') || question.includes('summary') || question.includes('about')) return 'Mukesh Kumar is a Technical Lead at <a href="https://corp.rakuten.co.in/" target="_blank">Rakuten India</a>, based in Bengaluru and originally from Jharkhand. He has 9+ years of experience in mobile app development (Android and iOS), contributed to a patent in watchOS, and worked on high-impact apps like <a href="https://apps.apple.com/app/rakuten-pay/id123456789" target="_blank">Rakuten Pay</a>, <a href="https://play.google.com/store/apps/details?id=jp.ne.paypay.android.app&hl=en_IN" target="_blank">PayPay</a>, <a href="https://play.google.com/store/search?q=vizmato&c=apps&hl=en_IN" target="_blank">Vizmato</a>, and CapitaStar. He holds a Bachelor of Engineering from Reva Institute of Technology and Management, and has received multiple awards for excellence. Contact: <a href="mailto:mukesh.beis@gmail.com">mukesh.beis@gmail.com</a>, <a href="tel:+917204606959">+91-7204606959</a>, or <a href="https://www.linkedin.com/in/mukesh-kumar-66567590/" target="_blank">LinkedIn</a>.';
+  return "Sorry, I couldn't find an answer. Please ask about skills, contact, awards, education, experience, designation, patent, downloads, Android or iOS experience, location, package, or projects!";
+}
+
+// Handle send
+chatSend.onclick = () => {
+  const q = chatInput.value.trim();
+  if (!q) return;
+  chatMessages.innerHTML += `<div style="margin-bottom:8px;"><b>You:</b> ${q}</div>`;
+  chatMessages.innerHTML += `<div style="margin-bottom:12px;"><b>AI:</b> ${getAnswer(q)}</div>`;
+  chatInput.value = '';
+  chatMessages.scrollTop = chatMessages.scrollHeight;
+};
+
+// Enter key to send
+chatInput.onkeydown = (e) => {
+  if (e.key === 'Enter') chatSend.onclick();
+};
 
 // Section scroll animation
 const observer = new IntersectionObserver((entries) => {
@@ -338,6 +474,11 @@ const observer = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.2 });
 document.querySelectorAll('main section').forEach(el => observer.observe(el));
+
+// Initialize language on DOMContentLoaded
+document.addEventListener('DOMContentLoaded', function() {
+  setLanguage('en');
+});
 </script>
 </body>
 </html>
